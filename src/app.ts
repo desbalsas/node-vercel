@@ -14,6 +14,8 @@ const app = express()
 app.use(helmet())
 app.use(cors())
 app.use(express.json())
+// Middleware para servir archivos estáticos
+app.use(express.static('public'))
 
 app.get<{}, MessageResponse>('/', (_, res) => {
 	res.json({
