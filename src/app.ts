@@ -5,6 +5,7 @@ import cors from 'cors'
 import * as middlewares from './middlewares'
 import api from './api'
 import type MessageResponse from './interfaces/MessageResponse'
+import path from 'node:path'
 
 require('dotenv').config()
 
@@ -24,6 +25,11 @@ app.get<{}, MessageResponse>('/', (_, res) => {
 })
 
 app.use('/api/v1', api)
+
+// Cualquier otra ruta debe servir el index.html de React
+app.get('*', (_, res) => {
+	res.sendFile(path.join(__dirname, '../public', 'index.html'))
+})
 
 app.use(middlewares.notFound)
 app.use(middlewares.errorHandler)
